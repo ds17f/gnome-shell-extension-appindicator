@@ -109,6 +109,10 @@ export async function* introspectBusObject(bus, name, cancellable,
 
     for (const subNodeInfo of nodeInfo.nodes) {
         const subPath = `${path}/${subNodeInfo.path}`;
+
+        if (!GLib.Variant.is_object_path(subPath))
+            continue;
+
         yield* introspectBusObject(bus, name, cancellable, interfaces, subPath);
     }
 }
